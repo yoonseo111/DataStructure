@@ -1,4 +1,4 @@
-// 최대, 최소 구하기
+// finding min, max
 
 #include <iostream>
 using namespace std;
