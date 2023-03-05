@@ -1,3 +1,5 @@
+// finding the number of the words in the sentence
+
 #include <iostream>
 #include <string>
 using namespace std;
