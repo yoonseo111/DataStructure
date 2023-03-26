@@ -19,7 +19,7 @@ double calcPostfixExpr(FILE* fp = stdin)
 			}
 			count++;
 			if (count == 3) {
-				printf("%s", "(2¹ø ¹®Á¦)\n");
+				printf("%s", "(2ë²ˆ ë¬¸ì œ)\n");
 				printf("%.1f\n", val2);
 				printf("%.1f\n", val1);
 			}
@@ -39,12 +39,12 @@ double calcPostfixExpr(FILE* fp = stdin)
 void main()
 {
 	OperandStack st;
-	printf("¼ö½Ä ÀÔ·Â = ");
+	printf("ìˆ˜ì‹ ì…ë ¥ = ");
 	double res = calcPostfixExpr();
 	printf("%s", "--------\n");
-	printf("%s", "(1¹ø ¹®Á¦)\n");
+	printf("%s", "(1ë²ˆ ë¬¸ì œ)\n");
 	st.display();
 	printf("%s", "--------\n");
-	printf("%s", "(°á°ú)\n");
+	printf("%s", "(ê²°ê³¼)\n");
 	printf("%.1f\n", res);
 }
