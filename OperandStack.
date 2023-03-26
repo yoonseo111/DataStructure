@@ -19,11 +19,11 @@ public:
 	bool isFull() { return top == MAX_STACK_SIZE; }
 
 	void push(double e) {
-		if (isFull()) error("½ºÅÃ Æ÷È­ ¿¡·¯");
+		if (isFull()) error("ìŠ¤íƒ í¬í™” ì—ëŸ¬");
 		data[++top] = e;
 	}
 	double pop() {
-		if (isEmpty()) error("½ºÅÃ °ø¹é ¿¡·¯");
+		if (isEmpty()) error("ìŠ¤íƒ ê³µë°± ì—ëŸ¬");
 		return data[top--];
 	}
 
