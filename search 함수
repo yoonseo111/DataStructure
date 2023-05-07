@@ -1,0 +1,9 @@
+BinaryNode* BinSrchTree::search(BinaryNode* n, int key) {
+	if (n==NULL) return NULL;
+	if (key==n->getData())
+		return n;
+	else if (key < n->getData())
+		return BinSrchTree::search(n->getLeft(), key);
+	else
+		return BinSrchTree::search(n->getRight(), key);
+}
