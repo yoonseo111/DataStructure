@@ -1,0 +1,8 @@
+int BinaryNode::getHeight(BinaryNode* node)
+{
+    if (node == NULL)
+        return 0;
+    int hLeft = BinaryNode::getHeight(node->getLeft());
+    int hRight = BinaryNode::getHeight(node->getRight());
+    return (hLeft > hRight) ? hLeft + 1 : hRight + 1;
+}
