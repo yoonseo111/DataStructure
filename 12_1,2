@@ -1,0 +1,24 @@
+12-1
+(1) 너비 우선 탐색: 3-4-2-1-0-5-6-7-8-9
+(3) 깊이 우선 탐색: 3-1-4-5-0-2-6-7-8-9
+
+12-2
+(1) V={A,B,C,D} , E={(A,B),(B,D),(C,D)}
+(2) A -> B
+    B -> D
+    C -> D
+    D ->
+(3) A -> B -> C -> D
+(4)
+L <- 빈 리스트
+S <- 진입차수가 없는 노드
+
+while S is not empty
+  remove node n from S
+  add n to L
+  for each node m with an edge e from n to m
+    remove dege e from graph
+    if m has no incoming deges
+      then insert m into S
+      
+return L
