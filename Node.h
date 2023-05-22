@@ -1,40 +1,16 @@
 #pragma once
-#include <stdio.h>
-#include <stdlib.h>
-#define MAX_STACK_SIZE	100
-
-inline void error(char* str) {
-	fprintf(stderr, "%s\n", str);
-	exit(1);
-};
-
-class Node
-{
+#include <cstdio>
+class Node {
+protected:
+	int id;
 	Node* link;
-	int		data;
-
+	
 public:
-	Node(int val = 0) : data(val), link(NULL) { }
+	Node(int i, Node *l=NULL):id(i), link(l){}
+	~Node() {
+		if (link != NULL) delete link;
+	}
+	int getId() { return id; }
 	Node* getLink() { return link; }
-	void setLink(Node* next) { link = next; }
-	void display() { printf(" <%2d>", data); }
-	bool hasData(int val) { return data == val; }
-	int getData()
-	{
-		return data;
-	}
-
-	void insertNext(Node* n) {
-		if (n != NULL) {
-			n->link = link;
-			link = n;
-		}
-	}
-
-	Node* removeNext() {
-		Node* removed = link;
-		if (removed != NULL)
-			link = removed->link;
-		return removed;
-	}
+	void setLink(Node* l) { link = l; }
 };
