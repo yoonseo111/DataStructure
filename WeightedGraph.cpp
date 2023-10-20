@@ -2,9 +2,9 @@
 #include <fstream>
 using namespace std;
 #define MAX_VTXS 100
-#define INF 9999              // INFÀÌ¸é °£¼±¾øÀ½
+#define INF 9999              // INFì´ë©´ ê°„ì„ ì—†ìŒ
 
-// °¡ÁßÄ¡ ±×·¡ÇÁ¸¦ Ç¥ÇöÇÏ´Â Å¬·¡½º 
+// ê°€ì¤‘ì¹˜ ê·¸ë˜í”„ë¥¼ í‘œí˜„í•˜ëŠ” í´ë˜ìŠ¤ 
 class AdjMatGraph {
 protected:
 	int    size;
@@ -26,7 +26,7 @@ public:
 	}
 	void insertVertex(char name) {
 		if (!isFull()) vertices[size++] = name;
-		else cout << "ERROR : ±×·¡ÇÁ Á¤Á¡ °³¼ö ÃÊ°ú" << endl;
+		else cout << "ERROR : ê·¸ë˜í”„ ì •ì  ê°œìˆ˜ ì´ˆê³¼" << endl;
 	}
 	void insertEdge(int u, int v) {
 		setEdge(u, v, 1);
@@ -43,7 +43,7 @@ public:
 	}
 };
 
-// °¡ÁßÄ¡ ±×·¡ÇÁ¸¦ Ç¥ÇöÇÏ´Â Å¬·¡½º
+// ê°€ì¤‘ì¹˜ ê·¸ë˜í”„ë¥¼ í‘œí˜„í•˜ëŠ” í´ë˜ìŠ¤
 class WGraph : public AdjMatGraph {
 public:
 	void insertEdge(int u, int v, int weight) {
@@ -55,15 +55,15 @@ public:
 		ifstream fp(filename);
 		if (fp.is_open()) {
 			int n, val;
-			fp >> n;              // Á¤Á¡ÀÇ ÀüÃ¼ °³¼ö
+			fp >> n;              // ì •ì ì˜ ì „ì²´ ê°œìˆ˜
 			for (int i = 0; i < n; i++) {
 				char str[80];
 				int val;
-				fp >> str;        // Á¤Á¡ÀÇ ÀÌ¸§
-				insertVertex(str[0]);        // Á¤Á¡ »ğÀÔ
+				fp >> str;        // ì •ì ì˜ ì´ë¦„
+				insertVertex(str[0]);        // ì •ì  ì‚½ì…
 				for (int j = 0; j < n; j++) {
-					fp >> val;    // °£¼± Á¤º¸
-					insertEdge(i, j, val);     // °£¼± »ğÀÔ          
+					fp >> val;    // ê°„ì„  ì •ë³´
+					insertEdge(i, j, val);     // ê°„ì„  ì‚½ì…          
 				}
 			}
 		}
@@ -72,32 +72,32 @@ public:
 	}
 };
 
-// Èü¿¡ ÀúÀåÇÒ ³ëµå Å¬·¡½º
+// í™ì— ì €ì¥í•  ë…¸ë“œ í´ë˜ìŠ¤
 #define MAX_ELEMENT	200
-// Á¤Á¡ ÁıÇÕ Å¬·¡½º (Union-Find ¿¬»ê)
+// ì •ì  ì§‘í•© í´ë˜ìŠ¤ (Union-Find ì—°ì‚°)
 class VertexSets {
-	int parent[MAX_VTXS];	// ºÎ¸ğ Á¤Á¡ÀÇ id
-	int nSets;				// ÁıÇÕÀÇ °³¼ö
+	int parent[MAX_VTXS];	// ë¶€ëª¨ ì •ì ì˜ id
+	int nSets;				// ì§‘í•©ì˜ ê°œìˆ˜
 public:
 	VertexSets(int n) : nSets(n) {
 	for (int i = 0; i < nSets; i++)
-			parent[i] = -1;			// ÃÊ±â¿¡ ¸ğµç Á¤Á¡ÀÌ °íÀ¯ÀÇ ÁıÇÕ¿¡ ¼ÓÇÔ
+			parent[i] = -1;			// ì´ˆê¸°ì— ëª¨ë“  ì •ì ì´ ê³ ìœ ì˜ ì§‘í•©ì— ì†í•¨
 	}
-	bool isRoot(int i) { return parent[i] < 0; }// -1ÀÌ¸é root
-	int findSet(int v) {	    				// v°¡ ¼ÓÇÑ ÁıÇÕÀ» Ã£¾Æ root ¹İÈ¯
-		while (!isRoot(v)) v = parent[v];		// v°¡ ¼ÓÇÑ ÁıÇÕÀÇ ·çÆ®¸¦ Ã£À½
+	bool isRoot(int i) { return parent[i] < 0; }// -1ì´ë©´ root
+	int findSet(int v) {	    				// vê°€ ì†í•œ ì§‘í•©ì„ ì°¾ì•„ root ë°˜í™˜
+		while (!isRoot(v)) v = parent[v];		// vê°€ ì†í•œ ì§‘í•©ì˜ ë£¨íŠ¸ë¥¼ ì°¾ìŒ
 		return v;
 	}
-	void unionSets(int s1, int s2) {	// ÁıÇÕ s1À» ÁıÇÕ s2¿Í ÇÕÄ§
-		parent[s1] = s2;  				// s1ÀÇ parent¸¦ s2·Î ¼³Á¤
-		nSets--;          				// 2°³ÀÇ ÁıÇÕÀ» ÇÕÃÄ¼­ ÁıÇÕ °³¼ö´Â 1 °¨¼Ò
+	void unionSets(int s1, int s2) {	// ì§‘í•© s1ì„ ì§‘í•© s2ì™€ í•©ì¹¨
+		parent[s1] = s2;  				// s1ì˜ parentë¥¼ s2ë¡œ ì„¤ì •
+		nSets--;          				// 2ê°œì˜ ì§‘í•©ì„ í•©ì³ì„œ ì§‘í•© ê°œìˆ˜ëŠ” 1 ê°ì†Œ
 	}
 };
 
 class HeapNode {
-	int	key;    // Key °ª: °£¼±ÀÇ °¡ÁßÄ¡
-	int	v1;     // Á¤Á¡ 1
-	int	v2;     // Á¤Á¡ 2
+	int	key;    // Key ê°’: ê°„ì„ ì˜ ê°€ì¤‘ì¹˜
+	int	v1;     // ì •ì  1
+	int	v2;     // ì •ì  2
 public:
 	HeapNode(int k = 0, int u = 0, int v = 0) : key(k), v1(u), v2(v) { }
 	void setKey(int k) { key = k; }
@@ -123,7 +123,7 @@ public:
 	HeapNode& getLeft(int i) { return node[i * 2]; }
 	HeapNode& getRight(int i) { return node[i * 2 + 1]; }
 
-	// »ğÀÔ ÇÔ¼ö
+	// ì‚½ì… í•¨ìˆ˜
 	void insert(int key, int u, int v) {
 		if (isFull()) return;
 		int i = ++size;
@@ -133,7 +133,7 @@ public:
 		}
 		node[i].setKey(key, u, v);
 	}
-	// »èÁ¦ ÇÔ¼ö
+	// ì‚­ì œ í•¨ìˆ˜
 	HeapNode remove() {
 		if (isEmpty()) return NULL;
 
@@ -160,35 +160,35 @@ public:
 };
 class WGraphMST : public WGraph {
 public:
-	void Kruskal() {     // kruskalÀÇ ÃÖ¼Ò ºñ¿ë ½ÅÀå Æ®¸® ÇÁ·Î±×·¥
+	void Kruskal() {     // kruskalì˜ ìµœì†Œ ë¹„ìš© ì‹ ì¥ íŠ¸ë¦¬ í”„ë¡œê·¸ë¨
 		MinHeap heap;
-		// 1. ¿À¸§Â÷¼øÁ¤·Ä (heap sort)
+		// 1. ì˜¤ë¦„ì°¨ìˆœì •ë ¬ (heap sort)
 		for (int i = 0; i < size - 1; i++)
 			for (int j = i + 1; j < size; j++)
 				if (hasEdge(i, j))
-					heap.insert(getEdge(i, j), i, j); // ¸ğµç °£¼± »ğÀÔ
-		VertexSets set(size);		// size°³ÀÇ ÁıÇÕÀ» ¸¸µê
-		int edgeAccepted = 0;		// ¼±ÅÃµÈ °£¼±ÀÇ ¼ö
-		while (edgeAccepted < size - 1) { 	// 4.(n-1)°³ÀÇ edge°¡ »ğÀÔµÉ¶§±îÁö
-			HeapNode e = heap.remove(); // 2.°¡Àå ÀÛÀº edge ¼±ÅÃ
-			int uset = set.findSet(e.getV1()); // v1ÀÌ ¼ÓÇÑ ÁıÇÕÀÇ ·çÆ® ¹İÈ¯
-			int vset = set.findSet(e.getV2()); // v2°¡ ¼ÓÇÑ ÁıÇÕÀÇ ·çÆ® ¹İÈ¯
-			if (uset != vset) {          // 3.»çÀÌÅ¬ »ı±âÁö ¾ÊÀ¸¸é MST»ğÀÔ
-				cout << "°£¼± Ãß°¡ : " << getVertex(e.getV1()) << " - " << getVertex(e.getV2()) << " (ºñ¿ë : " << e.getKey() << ")" << endl;
-				set.unionSets(uset, vset);       // µÎ°³ÀÇ ÁıÇÕÀ» ÇÕÇÔ.
+					heap.insert(getEdge(i, j), i, j); // ëª¨ë“  ê°„ì„  ì‚½ì…
+		VertexSets set(size);		// sizeê°œì˜ ì§‘í•©ì„ ë§Œë“¦
+		int edgeAccepted = 0;		// ì„ íƒëœ ê°„ì„ ì˜ ìˆ˜
+		while (edgeAccepted < size - 1) { 	// 4.(n-1)ê°œì˜ edgeê°€ ì‚½ì…ë ë•Œê¹Œì§€
+			HeapNode e = heap.remove(); // 2.ê°€ì¥ ì‘ì€ edge ì„ íƒ
+			int uset = set.findSet(e.getV1()); // v1ì´ ì†í•œ ì§‘í•©ì˜ ë£¨íŠ¸ ë°˜í™˜
+			int vset = set.findSet(e.getV2()); // v2ê°€ ì†í•œ ì§‘í•©ì˜ ë£¨íŠ¸ ë°˜í™˜
+			if (uset != vset) {          // 3.ì‚¬ì´í´ ìƒê¸°ì§€ ì•Šìœ¼ë©´ MSTì‚½ì…
+				cout << "ê°„ì„  ì¶”ê°€ : " << getVertex(e.getV1()) << " - " << getVertex(e.getV2()) << " (ë¹„ìš© : " << e.getKey() << ")" << endl;
+				set.unionSets(uset, vset);       // ë‘ê°œì˜ ì§‘í•©ì„ í•©í•¨.
 				edgeAccepted++;
 			}
 		}
 	}
 };
 
-// Dijkstra¾Ë°í¸®ÁòÀÇ ÃÖ´Ü °æ·Î Å½»ö ±â´ÉÀÌ Ãß°¡µÈ ±×·¡ÇÁ
+// Dijkstraì•Œê³ ë¦¬ì¦˜ì˜ ìµœë‹¨ ê²½ë¡œ íƒìƒ‰ ê¸°ëŠ¥ì´ ì¶”ê°€ëœ ê·¸ë˜í”„
 class WGraphDijkstra : public WGraph {
 	int path[MAX_VTXS];
-	int dist[MAX_VTXS];	// ½ÃÀÛ³ëµå·ÎºÎÅÍÀÇ ÃÖ´Ü°æ·Î °Å¸®
-	bool found[MAX_VTXS];	// ¹æ¹®ÇÑ Á¤Á¡ Ç¥½Ã ÁıÇÕ S -> ÁıÇÕ Æ÷ÇÔ ½Ã true
+	int dist[MAX_VTXS];	// ì‹œì‘ë…¸ë“œë¡œë¶€í„°ì˜ ìµœë‹¨ê²½ë¡œ ê±°ë¦¬
+	bool found[MAX_VTXS];	// ë°©ë¬¸í•œ ì •ì  í‘œì‹œ ì§‘í•© S -> ì§‘í•© í¬í•¨ ì‹œ true
 public:
-	int chooseVertex() {   // °¡Àå ºñ¿ë ÀûÀº ¹Ì¹æ¹® Á¤Á¡À» ¹İÈ¯
+	int chooseVertex() {   // ê°€ì¥ ë¹„ìš© ì ì€ ë¯¸ë°©ë¬¸ ì •ì ì„ ë°˜í™˜
 		int min = INF;
 		int minpos = -1;
 		for (int i = 0; i < size; i++)
@@ -198,61 +198,61 @@ public:
 			}
 		return minpos;
 	}
-	void printDistance() { //¸ğµç Á¤Á¡µéÀÇ dist[] °ª Ãâ·Â
+	void printDistance() { //ëª¨ë“  ì •ì ë“¤ì˜ dist[] ê°’ ì¶œë ¥
 		for (int i = 0; i < size; i++) { cout << dist[i] << " "; }
 		cout << endl;
 	}
 	void PrintPath(int start, int end) {
-		cout << "[ÃÖ´Ü°æ·Î: " << getVertex(start) << "<-" << getVertex(end) << "] " << getVertex(end);
+		cout << "[ìµœë‹¨ê²½ë¡œ: " << getVertex(start) << "<-" << getVertex(end) << "] " << getVertex(end);
 		while (path[end] != start) {
 			cout << "-" << getVertex(path[end]);
 			end = path[end];
 		}
 		cout << "-" << getVertex(path[end]) << endl;
 	}
-	// DijkstraÀÇ ÃÖ´Ü °æ·Î ¾Ë°í¸®Áò: start Á¤Á¡¿¡¼­ ½ÃÀÛÇÔ.
+	// Dijkstraì˜ ìµœë‹¨ ê²½ë¡œ ì•Œê³ ë¦¬ì¦˜: start ì •ì ì—ì„œ ì‹œì‘í•¨.
 	void ShortestPath(int start) {
-		for (int i = 0; i < size; i++) {  //ÃÊ±âÈ­: dist[], found[]
-			dist[i] = getEdge(start, i); //ÀÎÁ¢Çà·Ä °ª ¹İÈ¯(°£¼± °¡ÁßÄ¡)
+		for (int i = 0; i < size; i++) {  //ì´ˆê¸°í™”: dist[], found[]
+			dist[i] = getEdge(start, i); //ì¸ì ‘í–‰ë ¬ ê°’ ë°˜í™˜(ê°„ì„  ê°€ì¤‘ì¹˜)
 			path[i] = start;
-			found[i] = false;           //Ã³À½¿¡ SÁıÇÕÀº ºñ¾îÀÖÀ½.
+			found[i] = false;           //ì²˜ìŒì— Sì§‘í•©ì€ ë¹„ì–´ìˆìŒ.
 		}
-		found[start] = true;	// S¿¡ Æ÷ÇÔ
-		dist[start] = 0;		// ÃÖÃÊ °Å¸®
+		found[start] = true;	// Sì— í¬í•¨
+		dist[start] = 0;		// ìµœì´ˆ ê±°ë¦¬
 		for (int i = 0; i < size; i++) {
 			cout << "Step" << i + 1 << ": ";
-			printDistance();        // ¸ğµç dist[] ¹è¿­°ª Ãâ·Â
-			int u = chooseVertex(); // S¿¡ ¼ÓÇÏÁö ¾ÊÀº ºñ¿ë °¡Àå ÀÛÀº Á¤Á¡ ¹İÈ¯
-			found[u] = true;        // ÁıÇÕ S¿¡ u¸¦ Æ÷ÇÔ½ÃÅ´
+			printDistance();        // ëª¨ë“  dist[] ë°°ì—´ê°’ ì¶œë ¥
+			int u = chooseVertex(); // Sì— ì†í•˜ì§€ ì•Šì€ ë¹„ìš© ê°€ì¥ ì‘ì€ ì •ì  ë°˜í™˜
+			found[u] = true;        // ì§‘í•© Sì— uë¥¼ í¬í•¨ì‹œí‚´
 			for (int w = 0; w < size; w++) {
-				if (found[w] == false)//S¿¡ ¼ÓÇÏÁö ¾Ê´Â ³ëµå wÀÇ dist°ª °»½Å
+				if (found[w] == false)//Sì— ì†í•˜ì§€ ì•ŠëŠ” ë…¸ë“œ wì˜ distê°’ ê°±ì‹ 
 					if (dist[u] + getEdge(u, w) < dist[w]) {
 						dist[w] = dist[u] + getEdge(u, w);
 						path[w] = u;
 					}
-			}       // u¸¦ °ÅÃÄ°¡´Â °ÍÀÌ ÃÖ´Ü °Å¸®ÀÌ¸é dist[] °»½Å
+			}       // uë¥¼ ê±°ì³ê°€ëŠ” ê²ƒì´ ìµœë‹¨ ê±°ë¦¬ì´ë©´ dist[] ê°±ì‹ 
 		}
 	}
 };
 class WGraphFloyd : public WGraph
 {
-	int A[MAX_VTXS][MAX_VTXS]; // ÃÖ´Ü°æ·Î °Å¸®
+	int A[MAX_VTXS][MAX_VTXS]; // ìµœë‹¨ê²½ë¡œ ê±°ë¦¬
 public:
 	void ShortestPathFloyd() {
-		for (int i = 0; i < size; i++) // ±âº» ±æÀÌ·Î ÃÊ±âÈ­
+		for (int i = 0; i < size; i++) // ê¸°ë³¸ ê¸¸ì´ë¡œ ì´ˆê¸°í™”
 			for (int j = 0; j < size; j++) A[i][j] = getEdge(i, j);
 
-		for (int k = 0; k < size; k++) { // Á¤Á¡ k¸¦ °ÅÄ¡´Â °æ¿ì 
-			for (int i = 0; i < size; i++) // ¸ğµç (i,j) °æ·Î ¼öÁ¤
+		for (int k = 0; k < size; k++) { // ì •ì  kë¥¼ ê±°ì¹˜ëŠ” ê²½ìš° 
+			for (int i = 0; i < size; i++) // ëª¨ë“  (i,j) ê²½ë¡œ ìˆ˜ì •
 				for (int j = 0; j < size; j++)
 					if (A[i][k] + A[k][j] < A[i][j])
 						A[i][j] = A[i][k] + A[k][j];
-			printA(); // °¢ ´Ü°è¿¡¼­ÀÇ ÃÖ´Ü°æ·Î °Å¸® Ãâ·Â : k¹ø
+			printA(); // ê° ë‹¨ê³„ì—ì„œì˜ ìµœë‹¨ê²½ë¡œ ê±°ë¦¬ ì¶œë ¥ : kë²ˆ
 		}
 	}
 	void printA() {
 		cout << "====================================" << endl;
-		for (int i = 0; i < size; i++) { // ¸ğµç (i,j) °æ·Î °Å¸® Ãâ·Â
+		for (int i = 0; i < size; i++) { // ëª¨ë“  (i,j) ê²½ë¡œ ê±°ë¦¬ ì¶œë ¥
 			for (int j = 0; j < size; j++) {
 				if (A[i][j] == INF) cout << "  INF  ";
 				else cout << A[i][j] << " ";
@@ -265,26 +265,26 @@ public:
 
 int main() {
 	// p. 466
-	// 1) °¡ÁßÄ¡ ±×·¡ÇÁ¸¦ Adjacent Matrix ·Î Ç¥ÇöÇÏ±â("graph.txt")¸¦ ÀÌ¿ëÇÏ´Ï ÆÄÀÏ ³»¿ëÀ» È®ÀÎÇÏ¼¼¿ä. 
+	// 1) ê°€ì¤‘ì¹˜ ê·¸ë˜í”„ë¥¼ Adjacent Matrix ë¡œ í‘œí˜„í•˜ê¸°("graph.txt")ë¥¼ ì´ìš©í•˜ë‹ˆ íŒŒì¼ ë‚´ìš©ì„ í™•ì¸í•˜ì„¸ìš”. 
 	//WGraph WG;
 	//string fn = "graph.txt";
 	//WG.load(fn);
 	//WG.display();
 
 	// p. 474
-	// 2) Kruskal ¾Ë°í¸®ÁòÀ» ±¸ÇöÇÏ¿´½À´Ï´Ù. "graph.txt" ÆÄÀÏ°ú ÇÔ²² ÀÛµ¿ÇÏ´Â °úÁ¤À» ÀÌÇØÇØ º¸¼¼¿ä.
+	// 2) Kruskal ì•Œê³ ë¦¬ì¦˜ì„ êµ¬í˜„í•˜ì˜€ìŠµë‹ˆë‹¤. "graph.txt" íŒŒì¼ê³¼ í•¨ê»˜ ì‘ë™í•˜ëŠ” ê³¼ì •ì„ ì´í•´í•´ ë³´ì„¸ìš”.
 	//WGraphMST g;
 	//g.load("graph.txt");
-	//cout << "MST Å©·ç½ºÄ® ¾Ë°í¸®Áò" << endl;
+	//cout << "MST í¬ë£¨ìŠ¤ì¹¼ ì•Œê³ ë¦¬ì¦˜" << endl;
 	//g.Kruskal();
 
 	// p. 490
-	// 3) ´ÙÀÍ½ºÆ®¶ó ¾Ë°í¸®ÁòÀÇ ÀÛµ¿ °úÁ¤À» ÀÌÇØÇÏ¼¼¿ä. "graph_sp.txt" ÆÄÀÏÀ» ÀÌ¿ëÇÕ´Ï´Ù. 
+	// 3) ë‹¤ìµìŠ¤íŠ¸ë¼ ì•Œê³ ë¦¬ì¦˜ì˜ ì‘ë™ ê³¼ì •ì„ ì´í•´í•˜ì„¸ìš”. "graph_sp.txt" íŒŒì¼ì„ ì´ìš©í•©ë‹ˆë‹¤. 
 	//WGraphDijkstra g;
 	//string fn = "graph_sp.txt";
 	////string fn = "graph.txt";
 	//g.load(fn);
-	//cout << "DijkstraÀÇ ÃÖ´Ü°æ·Î Å½»öÀ» À§ÇÑ ±×·¡ÇÁ : " << fn << endl << endl;
+	//cout << "Dijkstraì˜ ìµœë‹¨ê²½ë¡œ íƒìƒ‰ì„ ìœ„í•œ ê·¸ë˜í”„ : " << fn << endl << endl;
 	//g.display();
 
 	//cout << "Shortest Path By Dijkstra Algorithm" << endl;
@@ -293,11 +293,11 @@ int main() {
 	//g.PrintPath(0, 3);
 		
 	// p. 495
-	// 4) ´ÙÀÍ½ºÆ®¶ó ¾Ë°í¸®ÁòÀº ÇÑ Á¤Á¡À» ½ÃÀÛ Á¤Á¡À¸·Î ÁöÁ¤ÇÏ¿© ¾Ë°í¸®ÁòÀÌ ÀÛµ¿ÇÕ´Ï´Ù. ¸ğµç Á¤Á¡¿¡ ´ëÇØ ´ÙÀÍ½ºÆ®¶ó ¾Ë°í¸®ÁòÀ» ½ÇÇàÇÏ´Â ¹æ¹ıÀÌ Floyd ¾Ë°í¸®ÁòÀÔ´Ï´Ù. "graph_sp.txt" ÆÄÀÏÀ» ÀÌ¿ëÇÕ´Ï´Ù.
+	// 4) ë‹¤ìµìŠ¤íŠ¸ë¼ ì•Œê³ ë¦¬ì¦˜ì€ í•œ ì •ì ì„ ì‹œì‘ ì •ì ìœ¼ë¡œ ì§€ì •í•˜ì—¬ ì•Œê³ ë¦¬ì¦˜ì´ ì‘ë™í•©ë‹ˆë‹¤. ëª¨ë“  ì •ì ì— ëŒ€í•´ ë‹¤ìµìŠ¤íŠ¸ë¼ ì•Œê³ ë¦¬ì¦˜ì„ ì‹¤í–‰í•˜ëŠ” ë°©ë²•ì´ Floyd ì•Œê³ ë¦¬ì¦˜ì…ë‹ˆë‹¤. "graph_sp.txt" íŒŒì¼ì„ ì´ìš©í•©ë‹ˆë‹¤.
 	WGraphFloyd f;
 	string fn = "graph_sp.txt";
 	f.load(fn);
-	cout << "DijkstraÀÇ ÃÖ´Ü°æ·Î Å½»öÀ» À§ÇÑ ±×·¡ÇÁ: " << fn << endl;
+	cout << "Dijkstraì˜ ìµœë‹¨ê²½ë¡œ íƒìƒ‰ì„ ìœ„í•œ ê·¸ë˜í”„: " << fn << endl;
 	f.display();
 
 	cout << "Shortest Path By Dijkstra Algorithm" << endl;
